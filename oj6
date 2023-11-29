@@ -1,0 +1,24 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+int main()
+{
+	int m, k, h;
+	int i, j;
+	static int height[100000];
+	long long int sum = 0;
+	scanf("%d %d %d", &m, &k, &h);
+	for (i = 0; i < m; i++)
+		scanf("%d", &height[i]);
+	for (i = 0; i < m ; i++)
+	{
+		for (j = i + 1; j <= i + k&&j<m; j++)
+		{
+			if (height[j] - height[i] <= h && height[j] - height[i] >= -h)
+			{
+				sum += 1;
+			}
+		}
+	}
+	printf("%lld", sum);
+	return 0;
+}
