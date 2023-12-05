@@ -1,19 +1,21 @@
 #include<stdio.h>
+#include<math.h>
+#include<algorithm>
 #pragma warning(disable:4996)
 int main()
 {
-	int m, k, h;
+	long long int m, k, h;
 	int i, j;
-	static int height[100000];
+	long long int height[100000];
 	long long int sum = 0;
-	scanf("%d %d %d", &m, &k, &h);
+	scanf("%lld %lld %lld", &m, &k, &h);
 	for (i = 0; i < m; i++)
 		scanf("%d", &height[i]);
-	for (i = 0; i < m ; i++)
+	for (i = 0; i < m; i++)
 	{
-		for (j = i + 1; j <= i + k&&j<m; j++)
+		for (j = i + 1; j <= i + k && j < m; j++)
 		{
-			if (height[j] - height[i] <= h && height[j] - height[i] >= -h)
+			if (abs(height[j] - height[i]) <= h)
 			{
 				sum += 1;
 			}
