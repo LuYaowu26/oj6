@@ -1,23 +1,60 @@
 #include<stdio.h>
-#include<math.h>
 #include<algorithm>
+#include<vector>
+using namespace std;
 #pragma warning(disable:4996)
 int main()
 {
+    vector<int> v;//定义一个容器v
+	long long int sum=0;//暂定int 如果是longlong再说//
 	long long int m, k, h;
-	int i, j;
-	long long int height[100000];
-	long long int sum = 0;
+	long long int i;
+	long long int pos1 = 0, pos2 = 0;
+	int height[100000];
 	scanf("%lld %lld %lld", &m, &k, &h);
 	for (i = 0; i < m; i++)
 		scanf("%d", &height[i]);
-	for (i = 0; i < m; i++)
+	for (i = 0; i < k; i++)
 	{
-		for (j = i + 1; j <= i + k && j < m; j++)
+		v.push_back(height[i]);
+	}
+	if (m < 10000)
+	{
+		for (i = 0; i < m; i++)
 		{
-			if (abs(height[j] - height[i]) <= h)
+			for (int j = i + 1; j <= i + k && j < m; j++)
 			{
-				sum += 1;
+				if (abs(height[j] - height[i]) <= h)
+				{
+					sum += 1;
+				}
+			}
+		}
+	}
+	else
+	{
+		sort(v.begin(), v.end());//给容器排序//	
+		for (i = 0; i < m; i++)
+		{
+			if (i + k < m)
+			{
+				if (height[i + k] > v.back())
+					v.push_back(height[i + k]);
+				else if (height[i + k] < v.front())
+					v.insert(v.begin(), height[i + k]);
+				else
+					v.insert(upper_bound(v.begin(), v.end(), height[i + k]), height[i + k]);
+			}
+			pos1 = lower_bound(v.begin(), v.end(), height[i] - h) - v.begin();//下界//
+			pos2 = upper_bound(v.begin(), v.end(), height[i] + h) - v.begin() - 1;//上界//
+			sum += pos2 - pos1;
+			for (int j = pos1; j <= pos2; j++)
+			{
+				if (v[j] == height[i])
+				{
+					v.erase(v.begin() + j);
+					break;
+				}
 			}
 		}
 	}
